@@ -77,6 +77,42 @@ body{
     color:orange;
     font-size:18px;
 }
+.review-card{
+    border:none;
+    border-radius:20px;
+    box-shadow:0px 5px 20px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.review-card:hover{
+    transform:translateY(-5px);
+}
+
+.image-wrapper{
+    position:relative;
+}
+
+.package-img{
+    height:180px;
+    width:100%;
+    object-fit:cover;
+    border-radius:15px;
+}
+
+/* Customer Review Badge */
+.review-badge{
+    position:absolute;
+    top:8px;
+    left:8px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    overflow:hidden;
+    
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+    z-index:10;
+}
+
 
 </style>
 
@@ -196,10 +232,18 @@ body{
 
             <div class="card review-card p-3 h-100">
 
-                <img
-                src="{{item.product_id.image.url}}"
-                class="package-img">
+               <div class="image-wrapper">
 
+    <img
+    src="{% static 'images/cusrev.avif' %}"
+    class="review-badge"
+    alt="Review Badge">
+
+    <img
+    src="{{item.product_id.image.url}}"
+    class="package-img">
+
+</div>
                 <div class="card-body">
 
                     <h5>
