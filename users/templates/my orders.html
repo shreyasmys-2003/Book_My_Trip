@@ -1,0 +1,386 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>MY ORDERS</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+body{
+    background:#f4f6f9;
+}
+
+/* NAVBAR */
+
+
+
+/* ORDER CARD */
+.order-card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    background:white;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    transition:.4s;
+    height:100%;
+}
+
+.order-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 30px rgba(0,0,0,.15);
+}
+
+.order-card img{
+    height:160px;
+    width:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.order-card:hover img{
+    transform:scale(1.05);
+}
+
+.card-body{
+    padding:14px;
+}
+
+.package-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.info-box{
+    background:#f8f9fa;
+    border-radius:10px;
+    padding:8px 10px;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.price{
+    color:#dc3545;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.old-price{
+    color:gray;
+    margin-left:5px;
+    font-size:13px;
+}
+
+.status-box{
+    padding:8px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+    margin-bottom:10px;
+    font-size:13px;
+}
+
+.confirmed{
+    background:#d4edda;
+    color:#155724;
+}
+
+.pending{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.rejected{
+    background:#f8d7da;
+    color:#721c24;
+}
+
+.custom-btn{
+    border-radius:25px;
+    font-size:13px;
+    padding:7px;
+    font-weight:bold;
+}
+
+.custom-btn:hover{
+    transform:scale(1.03);
+}
+
+.modal-content{
+    border-radius:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top bg-white">
+
+<div class="container-fluid">
+
+<a class="navbar-brand" style="color:black;">
+Welcome {{user}} !
+</a>
+
+<ul class="nav navbar mx-auto">
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'userhome' %}">Home</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'usercompletedorders' %}">Completed Orders</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link fw-semibold text-dark" href="{% url 'checklist' %}">Checklist</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'myorders' %}">My Orders</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'logout' %}">Logout</a>
+</li>
+
+</ul>
+
+</div>
+
+<h3 class="text-danger me-3">TripVox</h3>
+
+</nav>
+
+<h2 class="text-center text-danger mt-4 fw-bold">
+My Orders
+</h2>
+
+<!-- MAIN LAYOUT -->
+<div class="container-fluid mt-4">
+    <div class="row">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="col-md-3">
+
+            <div class="card shadow-sm p-3 h-100"
+                 style="border-radius:15px; position:sticky; top:20px; min-height:100vh;">
+
+                <h5 class="text-danger fw-bold mb-3">
+                    Karnataka Destinations
+                </h5>
+
+                <!-- Hill Stations -->
+                <h6 class="text-primary">🏔 Hill Stations</h6>
+                <ul class="list-group list-group-flush small mb-3">
+                    <li class="list-group-item">🌿 Coorg (Kodagu)</li>
+                    <li class="list-group-item">🌄 Chikkamagaluru</li>
+                    <li class="list-group-item">🌲 Sakleshpur</li>
+                    <li class="list-group-item">🌤 Agumbe</li>
+                    <li class="list-group-item">🌿 Kudremukh</li>
+                    <li class="list-group-item">🏞 Nandi Hills</li>
+                    <li class="list-group-item">🌄 Madikeri</li>
+                    <li class="list-group-item">🌿 Kemmanagundi</li>
+                </ul>
+
+                <!-- Wildlife -->
+                <h6 class="text-success">🐘 Wildlife</h6>
+                <ul class="list-group list-group-flush small mb-3">
+                    <li class="list-group-item">🦌 Bandipur National Park</li>
+                    <li class="list-group-item">🐅 Nagarhole National Park</li>
+                    <li class="list-group-item">🐘 Bannerghatta National Park</li>
+                    <li class="list-group-item">🐦 Dandeli Wildlife Sanctuary</li>
+                    <li class="list-group-item">🐆 Bhadra Wildlife Sanctuary</li>
+                    <li class="list-group-item">🦜 Ranganathittu Bird Sanctuary</li>
+                    <li class="list-group-item">🐘 Dubare Elephant Camp</li>
+                </ul>
+
+                <!-- Other Places -->
+                <h6 class="text-warning">🌊 Other Places</h6>
+                <ul class="list-group list-group-flush small">
+                    <li class="list-group-item">🏖 Gokarna Beach</li>
+                    <li class="list-group-item">🌉 Jog Falls</li>
+                    <li class="list-group-item">🏝 Karwar</li>
+                    <li class="list-group-item">🛕 Hampi</li>
+                    <li class="list-group-item">🏯 Mysuru Palace</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE ORDERS -->
+        <div class="col-md-9">
+
+            <div class="row g-4">
+
+                {% for msg in show %}
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+
+                    <form action="{% url 'makepayment' %}" method="POST">
+                        {% csrf_token %}
+
+                        {% for item in obj %}
+                        {% if item.id == msg.package_id %}
+
+                        <div class="card order-card">
+
+                            <img src="{{item.image.url}}">
+
+                            <div class="card-body">
+
+                                <h4 class="package-title">
+                                    {{item.placename}}
+                                </h4>
+
+                                <div class="info-box">
+                                    <b>Price:</b>
+                                    <span class="price">₹{{item.special_price}}</span>
+                                    <span class="old-price">
+                                        <s>₹{{item.actual_PRICE}}</s>
+                                    </span>
+                                </div>
+
+                                <div class="info-box">
+                                    <b>Days:</b> {{item.days}}
+                                </div>
+
+                                <input type="hidden" name="price" value="{{item.special_price}}">
+
+                                {% endif %}
+                                {% endfor %}
+
+                                <div class="info-box">
+                                    <b>Package ID:</b> {{msg.package_id}}
+                                </div>
+
+                                <div class="info-box">
+                                    <b>Persons:</b> {{msg.persons}}
+                                </div>
+
+                                <div class="info-box">
+                                    <b>Arrival Date:</b> {{msg.date}}
+                                </div>
+
+                                {% if msg.status == 'accept' %}
+
+                                <div class="status-box confirmed">
+                                    BOOKING CONFIRMED
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col">
+
+                                       <input type="hidden" name="id" value="{{msg.id}}">
+                                       <input type="hidden" name="persons" value="{{msg.persons}}">
+
+                                       {% if msg.id in paid_orders %}
+
+                                       <button class="btn btn-dark custom-btn w-100" disabled> PAID ✓</button>
+
+                                       {% else %}
+
+                                       <input type="submit" class="btn btn-success custom-btn w-100" value="PAY">
+
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="col">
+
+                                        {% if msg.id in paid_orders %}
+
+                                        <a class="btn btn-danger disabled custom-btn w-100">CANCEL</a>
+
+                                        {% else %}
+
+                                        <a class="btn btn-danger custom-btn w-100" data-bs-toggle="modal" data-bs-target="#cancel{{msg.id}}">CANCEL</a>
+
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+
+                                {% elif msg.status == 'reject' %}
+
+                                <div class="status-box rejected">
+                                    BOOKING REJECTED
+                                </div>
+
+                                <div class="text-danger small">
+                                    {{msg.reject}} <br>
+                                    {{msg.description}}
+                                </div>
+
+                                {% else %}
+
+                                <div class="status-box pending">
+                                    ORDER PENDING
+                                </div>
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <!-- CANCEL MODAL -->
+                <div class="modal fade" id="cancel{{msg.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="text-danger">Reasons for Cancel</h5>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <form action="{% url 'cancel' %}" method="POST">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="id" value="{{msg.id}}">
+
+                                    <select name="cancel" class="form-control">
+                                        <option>DUE TO SOME ISSUES</option>
+                                        <option>DUE TO PERSONAL ISSUES</option>
+                                        <option>I AM NOT SATISFIED WITH PACKAGE</option>
+                                        <option>I DON'T LIKE</option>
+                                    </select>
+
+                                    <input type="submit"
+                                           class="btn btn-danger mt-3 w-100 custom-btn"
+                                           value="SEND">
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

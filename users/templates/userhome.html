@@ -1,0 +1,945 @@
+{% load static %}
+
+<!doctype html>
+<html>
+<head>
+<title>TripVox</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+
+
+
+
+/* SEARCH BAR */
+
+.input-group input{
+height:45px;
+border:none;
+}
+
+
+.search-box{
+width:75%;          /* adjust size here */
+margin:auto;        /* center it */
+box-shadow:0px 5px 15px rgba(0,0,0,.1);
+border-radius:15px;
+overflow:hidden;
+background:white;
+}
+
+
+/* SIDEBAR */
+
+.sidebar-box{
+background:white;
+padding:15px;
+border-radius:20px;
+box-shadow:0px 8px 25px rgba(0,0,0,.1);
+}
+
+.list-group-item{
+border:none;
+font-size:14px;
+padding:12px;
+transition:.3s;
+cursor:pointer;
+}
+
+.list-group-item:hover{
+background:#f1f1f1;
+transform:translateX(5px);
+}
+
+
+/* PACKAGE CARD */
+
+.package-card{
+border:none;
+border-radius:20px;
+overflow:hidden;
+transition:.4s;
+box-shadow:0 8px 20px rgba(0,0,0,.1);
+background:white;
+height:100%;
+}
+
+.package-card:hover{
+transform:translateY(-10px);
+box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.package-card img{
+width:100%;
+height:160px;
+object-fit:cover;
+transition:.5s;
+}
+
+.package-card:hover img{
+transform:scale(1.08);
+}
+
+.place-title{
+font-size:18px;
+font-weight:bold;
+}
+
+.price{
+color:#dc3545;
+font-size:20px;
+font-weight:bold;
+}
+
+.old-price{
+color:gray;
+margin-left:10px;
+font-size:14px;
+}
+
+.days-box{
+background:#f5f5f5;
+padding:8px;
+border-radius:10px;
+text-align:center;
+margin:12px 0;
+font-size:14px;
+}
+
+.custom-btn{
+border-radius:30px;
+font-size:13px;
+font-weight:bold;
+transition:.3s;
+}
+
+.custom-btn:hover{
+transform:scale(1.05);
+}
+
+
+/* VOICE POPUP */
+
+
+
+/* Remove extra side spacing */
+
+.container,
+.container-fluid{
+padding-left:8px !important;
+padding-right:8px !important;
+}
+
+.row{
+margin-left:0 !important;
+margin-right:0 !important;
+}
+
+/* Optional: make cards use more width */
+.col-lg-3{
+padding-left:8px;
+padding-right:8px;
+}
+
+/* Sidebar width adjustment */
+.sidebar-box{
+padding:12px;
+}
+.voice-popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+
+    background: rgba(0,0,0,0.8);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition: 0.4s;
+    z-index: 9999;
+}
+
+.voice-popup.active{
+    visibility: visible;
+    opacity: 1;
+}
+
+.voice-box{
+    width: 380px;
+    padding: 30px;
+    border-radius: 25px;
+    background: rgba(20,20,20,.95);
+    text-align: center;
+    color: white;
+}
+
+.bot-wrapper{
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: auto;
+}
+
+.bot-image{
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 50%;
+    position: relative;
+    z-index: 10;
+}
+
+/* Ripple Animation */
+.ripple{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    border: 3px solid #00d9ff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rippleEffect 2s infinite;
+}
+
+.ripple:nth-child(2){
+    animation-delay: .6s;
+}
+
+.ripple:nth-child(3){
+    animation-delay: 1.2s;
+}
+
+@keyframes rippleEffect{
+    0%{
+        width:120px;
+        height:120px;
+        opacity:1;
+    }
+    100%{
+        width:250px;
+        height:250px;
+        opacity:0;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white">
+
+<div class="container-fluid">
+
+<a class="navbar-brand fw-semibold">
+
+Welcome {{user}} !
+
+</a>
+
+<ul class="nav navbar mx-auto">
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'userhome' %}">
+Home
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'usercompletedorders' %}">
+Completed Orders
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'checklist' %}">
+Checklist
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'myorders' %}">
+My Orders
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'logout' %}">
+Logout
+</a>
+</li>
+
+</ul>
+
+<h3 class="text-danger">
+TripVox
+</h3>
+
+</div>
+
+</nav>
+
+
+<!-- SEARCH -->
+
+<div class="container-fluid px-2 mt-4">
+
+<form action="{% url 'voicesearch' %}" method="GET">
+
+<div class="input-group search-box">
+
+<input type="text" name="q" id="searchInput" class="form-control" placeholder="Search destinations..." value="{{query}}">
+
+<button class="btn btn-danger" type="submit"><i class="fa fa-search"></i></button>
+
+<button class="btn btn-dark" type="button" id="micBtn"><i class="fa fa-microphone"></i></button>
+
+</div>
+
+</form>
+
+<!-- VOICE POPUP -->
+
+<!-- VOICE POPUP -->
+
+<div class="voice-popup" id="voicePopup">
+
+    <div class="voice-box animate__animated animate__zoomIn">
+
+        <div class="bot-wrapper">
+
+            <div class="ripple"></div>
+            <div class="ripple"></div>
+            <div class="ripple"></div>
+
+            <img src="{% static 'images/voice.png' %}"
+                 alt="ChatBot"
+                 class="bot-image">
+
+        </div>
+
+        <h3 class="mt-4">Listening...</h3>
+
+        <p class="text-light">
+            Speak your destination
+        </p>
+
+        <button
+            class="btn btn-danger stop-btn mt-3"
+            onclick="closePopup()">
+            Stop
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="container-fluid px-2 mt-3">
+
+<div class="row">
+
+
+<!-- LEFT SIDEBAR -->
+
+<div class="col-lg-3">
+
+<div class="sidebar-box">
+
+<h5 class="text-center fw-bold mb-4">
+
+Karnataka Destinations
+
+</h5>
+
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+
+<div class="card-body">
+
+<h6 class="text-danger fw-bold">
+
+<i class="fa fa-paw"></i>
+Wildlife Places
+
+</h6>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item">🐘 Kabini</li>
+<li class="list-group-item">🦌 Bandipur</li>
+<li class="list-group-item">🐅 Nagarahole</li>
+<li class="list-group-item">🌳 BRT Tiger Reserve</li>
+<li class="list-group-item">🦅 Dandeli</li>
+<li class="list-group-item">🦏 Bannerghatta</li>
+<li class="list-group-item">🦜 Ranganathittu</li>
+<li class="list-group-item">🐾 Bhadra Sanctuary</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+<div class="card border-0 shadow-sm rounded-4">
+
+<div class="card-body">
+
+<h6 class="text-success fw-bold">
+
+<i class="fa fa-tree"></i>
+Hill Stations
+
+</h6>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item">⛰️ Coorg</li>
+<li class="list-group-item">🌄 Chikmagalur</li>
+<li class="list-group-item">🏞️ Kemmanagundi</li>
+<li class="list-group-item">🌿 Agumbe</li>
+<li class="list-group-item">🏔️ Nandi Hills</li>
+<li class="list-group-item">🍃 Mullayanagiri</li>
+<li class="list-group-item">☁️ Kodachadri</li>
+<li class="list-group-item">🏕️ Sakleshpur</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="card border-0 shadow-sm mt-3 rounded-4">
+
+<div class="card-body">
+
+<h6 class="text-success fw-bold">
+
+<i class="fa fa-tree"></i>
+Hill Stations
+
+</h6>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item">⛰️ Coorg</li>
+<li class="list-group-item">🌄 Chikmagalur</li>
+<li class="list-group-item">🏞️ Kemmanagundi</li>
+<li class="list-group-item">🌿 Agumbe</li>
+<li class="list-group-item">🏔️ Nandi Hills</li>
+<li class="list-group-item">🍃 Mullayanagiri</li>
+<li class="list-group-item">☁️ Kodachadri</li>
+<li class="list-group-item">🏕️ Sakleshpur</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="card border-0 shadow-sm mt-3 rounded-4 mb-4">
+
+<div class="card-body">
+
+<h6 class="text-danger fw-bold">
+
+<i class="fa fa-paw"></i>
+Wildlife Places
+
+</h6>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item">🐘 Kabini</li>
+<li class="list-group-item">🦌 Bandipur</li>
+<li class="list-group-item">🐅 Nagarahole</li>
+<li class="list-group-item">🌳 BRT Tiger Reserve</li>
+<li class="list-group-item">🦅 Dandeli</li>
+<li class="list-group-item">🦏 Bannerghatta</li>
+<li class="list-group-item">🦜 Ranganathittu</li>
+<li class="list-group-item">🐾 Bhadra Sanctuary</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="card border-0 shadow-sm mt-3 rounded-4 mb-4">
+
+<div class="card-body">
+
+<h6 class="text-danger fw-bold">
+
+<i class="fa fa-paw"></i>
+Wildlife Places
+
+</h6>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item">🐘 Kabini</li>
+<li class="list-group-item">🦌 Bandipur</li>
+<li class="list-group-item">🐅 Nagarahole</li>
+<li class="list-group-item">🌳 BRT Tiger Reserve</li>
+<li class="list-group-item">🦅 Dandeli</li>
+<li class="list-group-item">🦏 Bannerghatta</li>
+<li class="list-group-item">🦜 Ranganathittu</li>
+<li class="list-group-item">🐾 Bhadra Sanctuary</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RIGHT SIDE -->
+
+<div class="col-lg-9">
+
+<h2 class="text-center fw-bold mb-4">
+
+Popular Tour Packages
+
+</h2>
+
+<div class="row g-4">
+
+{% for msg in obj %}
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card package-card">
+
+<img src="{{msg.image.url}}">
+
+<div class="card-body">
+
+<div class="place-title">{{msg.placename}}</div>
+
+
+{% if msg.id in wishlist_products %}
+<a class=""><span class="badge bg-success mt-2 mb-2"><i class="fa fa-heart pe-2"></i>Added</span></a>
+{% else %}
+<a href="/add_to_checklist/{{msg.id}}"><span class="badge bg-danger mt-2 mb-2"><i class="fa fa-heart pe-2"></i>Add to Checklist</span></a>
+{% endif %}
+
+
+
+<div class="mb-2"><span class="price">₹{{msg.special_price}}</span><span class="old-price"><s>₹{{msg.actual_PRICE}}</s></span>
+
+</div>
+
+<div class="days-box">{{msg.days}} Days Tour Package</div>
+
+<div class="row g-2">
+
+<div class="col">
+
+<a href="/book/{{msg.id}}"
+class="btn btn-dark custom-btn w-100">
+
+BOOK
+
+</a>
+
+</div>
+
+<div class="col">
+
+<a href="/place/{{msg.id}}"
+class="btn btn-warning custom-btn w-100">
+
+INFO
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<script>
+
+const micBtn = document.getElementById("micBtn");
+const voicePopup = document.getElementById("voicePopup");
+const searchInput = document.getElementById("searchInput");
+
+let popupTimer;
+
+// ===========================
+// LOAD VOICES
+// ===========================
+
+let voices = [];
+
+function loadVoices() {
+    voices = speechSynthesis.getVoices();
+}
+
+loadVoices();
+
+if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+// ===========================
+// SPEECH RECOGNITION
+// ===========================
+
+const SpeechRecognition =
+window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const recognition = new SpeechRecognition();
+
+recognition.lang = "en-IN";
+recognition.continuous = false;
+recognition.interimResults = false;
+
+// ===========================
+// TEXT TO SPEECH
+// ===========================
+
+function speak(text){
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = "en-US";
+    utterance.rate = 0.95;
+    utterance.pitch = 0.8;
+    utterance.volume = 1;
+
+    let maleVoice =
+        voices.find(v => v.name.includes("Microsoft David")) ||
+        voices.find(v => v.name.includes("Microsoft Mark")) ||
+        voices.find(v => v.name.includes("Google UK English Male")) ||
+        voices.find(v => v.name.includes("Daniel")) ||
+        voices.find(v => v.name.includes("Alex")) ||
+        voices.find(v => v.name.toLowerCase().includes("male")) ||
+        voices[0];
+
+    if(maleVoice){
+        utterance.voice = maleVoice;
+    }
+
+    speechSynthesis.speak(utterance);
+}
+
+// ===========================
+// OPEN POPUP
+// ===========================
+
+micBtn.addEventListener("click",()=>{
+
+    voicePopup.classList.add("active");
+
+    clearTimeout(popupTimer);
+
+    try{
+        recognition.start();
+    }
+    catch(e){}
+
+    popupTimer = setTimeout(()=>{
+        closePopup();
+    },15000);
+
+});
+
+// ===========================
+// CLOSE POPUP
+// ===========================
+
+function closePopup(){
+
+    voicePopup.classList.remove("active");
+
+    try{
+        recognition.stop();
+    }
+    catch(e){}
+
+    clearTimeout(popupTimer);
+}
+
+// ===========================
+// VOICE COMMANDS
+// ===========================
+
+recognition.onresult = function(event){
+
+    let voiceText =
+    event.results[0][0].transcript.toLowerCase().trim();
+
+    console.log("User Said:", voiceText);
+
+    searchInput.value = voiceText;
+
+    // ==========================
+    // HOME
+    // ==========================
+
+    if(
+        voiceText.includes("show home") ||
+        voiceText.includes("open home")
+    ){
+
+        speak("Opening home page");
+
+        setTimeout(()=>{
+            window.location.href="{% url 'userhome' %}";
+        },1500);
+    }
+
+    // ==========================
+    // MY ORDERS
+    // ==========================
+
+    else if(
+        voiceText.includes("show my orders") ||
+        voiceText.includes("open my orders")
+    ){
+
+        speak("Opening your orders");
+
+        setTimeout(()=>{
+            window.location.href="{% url 'myorders' %}";
+        },1500);
+    }
+
+    // ==========================
+    // COMPLETED ORDERS
+    // ==========================
+
+    else if(
+        voiceText.includes("show completed orders") ||
+        voiceText.includes("completed orders")
+    ){
+
+        speak("Opening completed orders");
+
+        setTimeout(()=>{
+            window.location.href="{% url 'usercompletedorders' %}";
+        },1500);
+    }
+
+    // ==========================
+    // CHECKLIST
+    // ==========================
+
+    else if(
+        voiceText.includes("show checklist") ||
+        voiceText.includes("open checklist")
+    ){
+
+        speak("Opening checklist");
+
+        setTimeout(()=>{
+            window.location.href="{% url 'checklist' %}";
+        },1500);
+    }
+
+    // ==========================
+    // LOGOUT
+    // ==========================
+
+    else if(
+        voiceText.includes("logout") ||
+        voiceText.includes("log out")
+    ){
+
+        speak("Logging you out");
+
+        setTimeout(()=>{
+            window.location.href="{% url 'logout' %}";
+        },1500);
+    }
+
+    // ==========================
+    // ADD TO CHECKLIST
+    // Examples:
+    // Add Coorg to checklist
+    // Add Kabini to checklist
+    // ==========================
+
+    else if(
+        voiceText.startsWith("add ") &&
+        voiceText.includes("checklist")
+    ){
+
+        let place = voiceText
+            .replace("add ","")
+            .replace("to checklist","")
+            .replace("checklist","")
+            .trim();
+
+        speak(place + " added to checklist");
+
+        setTimeout(()=>{
+
+            window.location.href =
+            "/voice-checklist/" +
+            encodeURIComponent(place) +
+            "/";
+
+        },1500);
+    }
+
+    // ==========================
+    // BOOK PLACE
+    // Examples:
+    // Book Coorg
+    // Book Kabini
+    // ==========================
+
+    else if(
+        voiceText.startsWith("book ")
+    ){
+
+        let place =
+        voiceText.replace("book ","").trim();
+
+        speak(
+            "Opening booking page for " +
+            place
+        );
+
+        setTimeout(()=>{
+
+            window.location.href =
+            "/voice-book/" +
+            encodeURIComponent(place) +
+            "/";
+
+        },1500);
+    }
+
+    // ==========================
+    // PLACE DETAILS
+    // Examples:
+    // Open Coorg
+    // Details of Kabini
+    // Show details of Dandeli
+    // ==========================
+
+    else if(
+        voiceText.startsWith("open ") ||
+        voiceText.startsWith("details of ") ||
+        voiceText.startsWith("show details of ")
+    ){
+
+        let place = voiceText
+            .replace("open ","")
+            .replace("details of ","")
+            .replace("show details of ","")
+            .trim();
+
+        speak(
+            "Opening details for " +
+            place
+        );
+
+        setTimeout(()=>{
+
+            window.location.href =
+            "/voice-open/" +
+            encodeURIComponent(place) +
+            "/";
+
+        },1500);
+    }
+
+    // ==========================
+    // DEFAULT SEARCH
+    // ==========================
+
+    else{
+
+        speak(
+            "Searching for " +
+            voiceText
+        );
+
+        setTimeout(()=>{
+
+            window.location.href =
+            "/voicesearch/?q=" +
+            encodeURIComponent(voiceText);
+
+        },1500);
+    }
+
+    closePopup();
+};
+
+// ===========================
+// ERRORS
+// ===========================
+
+recognition.onerror = function(event){
+
+    console.log("Speech Error:", event.error);
+
+    speak("Sorry, I could not hear you");
+
+    closePopup();
+};
+
+recognition.onend = function(){
+    clearTimeout(popupTimer);
+};
+</script>
+
+</body>
+</html>

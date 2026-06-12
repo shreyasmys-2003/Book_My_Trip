@@ -1,0 +1,145 @@
+{% load static %}
+
+<!doctype html>
+<html>
+    <head>
+        <title>enquiry form</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+
+        <style>
+            .navbar{
+                    background:white;
+                    box-shadow:0px 2px 10px rgba(0,0,0,0.1);
+                    }
+
+
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg sticky-top bg-white">
+
+<div class="container-fluid">
+
+<a class="navbar-brand fw-semibold">
+
+Welcome {{user}} !
+
+</a>
+
+<ul class="nav navbar mx-auto">
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'userhome' %}">
+Home
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'usercompletedorders' %}">
+Completed Orders
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'checklist' %}">
+Checklist
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'myorders' %}">
+My Orders
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"
+href="{% url 'logout' %}">
+Logout
+</a>
+</li>
+
+</ul>
+
+<h3 class="text-danger">
+TripVox
+</h3>
+
+</div>
+
+</nav>
+
+        <h3 class="text-center text-danger mt-4">MAKE YOUR PAYMENT HERE</h3>
+        <h4 class="text-center text-danger mt-4 mb-3">PLEASE PAY ₹{{total_amount}} </h4>
+      
+            <div class="container-fluid">
+                <div class="row">
+                   
+                    <div class="col-md-12" align="center">   
+                        <img src="{% static 'images/GooglePay_QR.png' %}" style="height:300px;width:550px mb-3;">
+                        
+                        <form action="{% url 'pay' %}"  method="POST">
+                            
+                            {% csrf_token %}
+
+                            <input type="text" name="id" hidden class="form-control w-25 mb-3 mt-3"> 
+
+                            <input type="text" name="id" class="form-control w-25 mb-3 mt-3" value="{{show.id}}">
+
+                            <input type="number" name="persons" class="form-control w-25 mt-3" value="{{show.persons}}">
+
+                            <input type="number" name="total_amount" class="form-control w-25 mt-3" value="{{total_amount}}">
+
+                            <input type="text" name="transactional_ID" class="form-control w-25 mt-3" placeholder="ENTER TRANSACTIONAL_ID">
+
+                            <select id="trip"  name="payment_MODE" class="form-control w-25 mt-3" class="fav_trip">
+                                <option>GOOGLE PAY</option>
+                                <option>PHONE PAY</option>
+                                <option>RAZOR PAY</option>
+                            </select>
+                            <input type="submit" class="btn btn-dark mt-3 mb-5" value="SUBMIT">
+                        </form>
+                        
+                      
+                    </div>
+                </div>
+            </div>
+
+           <div class="toast-container position-fixed top-0 end-0 p-3">
+
+    {% for msg in messages %}
+
+    <div class="toast align-items-center text-bg-success border-0 show mb-2"
+         role="alert"
+         aria-live="assertive"
+         aria-atomic="true">
+
+        <div class="d-flex">
+
+            <div class="toast-body">
+                {{msg}}
+            </div>
+
+            <button type="button"
+                    class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+            
+            
+     
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+    </body>
+</html>

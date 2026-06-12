@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>UPDATE PAGE</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+        <style>
+             .container h1{
+                position: relative;
+                bottom: 200px;
+                text-align: center;
+                font-family: cursive;
+
+            }
+
+        </style>
+    </head>
+    <body>
+         <nav class="navbar navbar-expand-lg bg-dark mb-5">
+            <div class="container-fluid">
+                <a class="navbar-brand" style="font-family: cursive;"href="#"><b style="color:whitesmoke;">ADMIN PANEL</b></a>
+                <ul class="navbar nav">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;font-family:cursive;" href="admin.html">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white; font-family:cursive;" href="view orders.html">VIEW ORDERS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white; font-family:cursive;" href="completed orders.html">COMPLETED ORDERS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white; font-family:cursive;">LOGOUT</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+      
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="{% url 'insert' %}" method="POST"  style="box-shadow: 1px 10px 30px black;" class="px-5 py-5">
+                        {% csrf_token %}
+                        <h3>UPDATE<b style="color:red;"> TOUR </b>PACKAGE</h3>
+                        
+                         <label class="py-3"><b>CHOOSE CATEGORY</b></label>  
+                        <select id="trips" name="Category" class="fav_trip">
+                            {% for msg in category %}     
+                            <option value="{{msg.name}} ">{{msg.name}}</option>
+                            {% endfor %}
+                            <!--<option value="SAFARI'S">SAFARI'S</option>
+                            <option value="HILL STATION'S">HILL STATION'S</option>
+                            <option value="TREKKING">TREKKING</option>
+                            <option value="ISLANDS">ISLANDS</option>
+                            <options value="RESORTS">RESORTS</options>-->
+                        </select><br>
+
+                        <label><b>UPLOAD IMAGE</b></label>
+                        <input type="text" name="id" value="{{obj.id}}" hidden>
+                        <input type="text" class="form-control mb-3" name="filetoupload" value="{{obj.image}}"  id="filetoupload">
+                        <input type="text"  value="{{obj.placename}}" name="placename" required placeholder="ENTER PLACE NAME" class="form-control mb-3">
+                        <div class="row">
+                            <div class="col">
+                              <input type="text" value="{{obj.actual_PRICE}}" name="actual_price" required placeholder="ENTER PRICE" class="form-control mb-3">
+                            </div>
+                            <div class="col">
+                                <input type="text" value="{{obj.special_price}}" name="special_price" required placeholder="ENTER PRICE" class="form-control mb-3">
+                            </div>
+                        </div>
+                        <input type="number" value="{{obj.days}}" name="days" required placeholder="ENTER DAYS" class="form-control mb-3">
+                        <div class="form-group">
+                            <textarea class="form-control mb-3" name="tour_themes" required placeholder="ENTER TOUR THEMES">{{obj.tour_themes}}</textarea>
+                        </div>
+                        <input type="submit" value="UPDATE" class="btn btn-success" href="edit/{{obj.id}}"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

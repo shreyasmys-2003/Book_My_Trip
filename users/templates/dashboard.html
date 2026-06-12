@@ -1,0 +1,413 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Dashboard</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+body{
+background:#f5f6fa;
+font-family:Arial,sans-serif;
+}
+
+
+/* Navbar */
+
+.navbar{
+background:white;
+padding:15px;
+box-shadow:0px 3px 10px rgba(0,0,0,.1);
+}
+
+
+/* Dashboard Header */
+
+.dashboard-header{
+background:linear-gradient(
+135deg,
+#4CAF50,
+#2E7D32
+);
+
+padding:40px;
+border-radius:20px;
+color:white;
+box-shadow:0px 5px 15px rgba(0,0,0,.1);
+}
+
+
+.dashboard-header h2{
+font-weight:bold;
+}
+
+
+/* Stats Cards */
+
+.stat-card{
+background:white;
+border-radius:20px;
+padding:25px;
+text-align:center;
+box-shadow:0px 5px 15px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-7px);
+}
+
+.stat-card i{
+font-size:35px;
+margin-bottom:10px;
+}
+
+.stat-card h3{
+font-weight:bold;
+}
+
+
+/* Sections */
+
+.section-box{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0px 5px 15px rgba(0,0,0,.08);
+margin-top:30px;
+}
+
+
+/* Recommendation cards */
+
+.place-card{
+background:#fff;
+padding:15px;
+border-radius:15px;
+box-shadow:0px 4px 12px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.place-card:hover{
+transform:scale(1.04);
+}
+
+.place-card img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:15px;
+}
+
+.place-card h5{
+margin-top:10px;
+}
+
+
+/* Recent activity */
+
+.activity-item{
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+.activity-item:last-child{
+border:none;
+}
+
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.dashboard-header{
+text-align:center;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg">
+
+<div class="container-fluid">
+
+<h4 class="fw-bold text-success">
+
+TripVox Dashboard
+
+</h4>
+
+<ul class="nav">
+
+<li class="nav-item">
+<a class="nav-link text-dark"
+href="{% url 'userhome' %}">
+Home
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link text-dark"
+href="{% url 'myorders' %}">
+Orders
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link text-dark"
+href="{% url 'wishlist' %}">
+Wishlist
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link text-dark"
+href="{% url 'logout' %}">
+Logout
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+
+
+<div class="container mt-5">
+
+
+<!-- Welcome Banner -->
+
+<div class="dashboard-header">
+
+<h2>
+
+Welcome {{user.username}} 👋
+
+</h2>
+
+<p>
+
+Ready for your next adventure with TripVox?
+
+</p>
+
+</div>
+
+
+
+<!-- Stats -->
+
+<div class="row mt-4">
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<i class="fa fa-check-circle text-success"></i>
+
+<h3>{{completed}}</h3>
+
+<p>Completed Trips</p>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<i class="fa fa-shopping-bag text-primary"></i>
+
+<h3>{{pending}}</h3>
+
+<p>Pending Orders</p>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<i class="fa fa-heart text-danger"></i>
+
+<h3>{{wishlist}}</h3>
+
+<p>Wishlist</p>
+
+</div>
+
+</div>
+
+
+
+<div class="col-md-3">
+
+<div class="stat-card">
+
+<i class="fa fa-list text-warning"></i>
+
+<h3>{{checklist}}</h3>
+
+<p>Checklist</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Recommendations -->
+
+<div class="section-box">
+
+<h3 class="mb-4">
+
+Recommended Places For You
+
+</h3>
+
+<div class="row">
+
+{% for place in recommended %}
+
+<div class="col-md-4 mb-4">
+
+<div class="place-card">
+
+<img src="{{place.image.url}}">
+
+<h5>
+
+{{place.placename}}
+
+</h5>
+
+<p class="text-success">
+
+₹{{place.special_price}}
+
+</p>
+
+<a href="/place/{{place.id}}"
+class="btn btn-success">
+
+View
+
+</a>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+
+
+<!-- Recent Activity -->
+
+<div class="section-box">
+
+<h3>
+
+Recent Activity
+
+</h3>
+
+{% for item in recent_orders %}
+
+<div class="activity-item">
+
+<i class="fa fa-map-marker text-success"></i>
+
+Booked
+
+<b>
+
+{{item.product_id.placename}}
+
+</b>
+
+</div>
+
+{% empty %}
+
+<p>No recent activity</p>
+
+{% endfor %}
+
+</div>
+
+
+
+<!-- Upcoming Trips -->
+
+<div class="section-box">
+
+<h3>
+
+Upcoming Trips
+
+</h3>
+
+{% for trip in upcoming %}
+
+<div class="activity-item">
+
+<i class="fa fa-plane text-primary"></i>
+
+{{trip.product_id.placename}}
+
+-
+
+{{trip.date}}
+
+</div>
+
+{% empty %}
+
+<p>No upcoming trips</p>
+
+{% endfor %}
+
+</div>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>kabini</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .term img{
+                height:407px;
+                width:450px;
+                object-fit: cover;
+            }
+            .terms{
+                position:relative;
+                bottom:210px;
+                color:whitesmoke
+                
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-dark mb-5">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><b style="color:white;font-family: cursive;">FEEL THE</b><b style="color:orange; font-family: cursive;"> NATURE</b></a>
+                 <ul class="navbar nav">
+                    <li class="nav-item">
+                       <a class="nav-link" style="color:white;font-family: cursive;" href="places.html">HOME</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" style="color:white; font-family:cursive;" href="usercompleted orders.html">COMPLETED ORDERS</a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" style="color:white;font-family: cursive;" href="my orders.html">MY ORDERS</a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="nav-link" style="color:white; font-family:cursive;" href="userpage.html">LOGOUT</a>
+                    </li>
+                 </ul>
+            </div>
+        </nav>
+    <!--  <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-16">
+                    <img src="leopard1.jpg" width="100%"style="height:380px;">
+                        <div class="terms">
+                            <h2 style="font-family: cursive;font-size: 50px;"align="center">USER PANEL</h2>
+                        </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="container term" style="margin-bottom:80px;">
+            <div class="row">
+                <h4>TOUR <b style="color:red;">PACKAGE</b></h4>
+                <div class="col-md-4">
+                    <div id="carouselexampledark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" data-bs-interval="1500">
+                                <img src="tigress.jpeg" style="border-radius: 10px;" width="100%">
+                                <h4 align="center"></h4>
+                            </div>
+                             <div class="carousel-item active" data-bs-interval="1500">
+                                <img src="safari-1.jpg" style="border-radius: 10px;" width="100%">
+                                <h4 align="center"></h4>
+                            </div>
+                             <div class="carousel-item active" data-bs-interval="1500">
+                                <img src="panther.jpg" style="border-radius: 10px;" width="100%">
+                                <h4 align="center"></h4>
+                            </div>
+                            <div class="carousel-item active" data-bs-interval="1500">
+                                <img src="elephant.jpeg" style="border-radius: 10px;" width="100%">
+                                <h4 align="center"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% for msg in obj %}
+
+                <div class="col-md-8">
+                    <h4>{{msg.placename}}</h4>
+                    <h6 style="margin-bottom: 25px;">TOUR DETAILS</h6>
+                    <P>DESTINATION : {{msg.placename}}</P>
+                    <P>DURATION : {{msg.days}}</P>
+                    <P>TOUR THEMES :{{msg.tour_themes}}</P>
+                    <h6 style="color:red;margin-bottom: 15px;">STARTS FROM {{msg.special_price}}/PERSON</h6>
+                    <form action="enquiry form.html" method="post">
+                        <b style="margin-bottom: 3px;">DETAILS</b>
+                        <input type="date" required placeholder="ARRIVAL DATE" class="form-control w-50 mb-3">
+                        <input type="number" required placeholder="NUMBER OF PERSONS"class="form-control w-50 mb-3">
+                         <input type="submit" value="BOOK NOW" class="btn btn-dark form-control w-50 mb-1">
+                         
+                    </form>
+                </div>
+                
+                {% endfor %}
+            </div>
+        </div>
+
+       <!-- <div class="container-fluid bg-secondary">
+            <div class="row">
+                <div class="col-md-4" style="margin-top:10px;">
+                    <h4 style="color:whitesmoke;">WHY MAKE MY TRIP?</h4>
+                    <img src="trip.jpg"width="100%" style="height:100px;width:100px;border-radius:50px;margin-bottom: 10px;">
+                    <P style="color:whitesmoke;">Established in 2000, MakeMyTrip has since positioned itself as one of the leading companies, providing great offers, competitive airfares, exclusive discounts, and a seamless online booking experience to many of its customers. The experience of booking your flight tickets, hotel stay, and holiday package through our desktop site or mobile app can be done with complete ease and no hassles at all. We also deliver amazing offers, such as Instant Discounts, Fare Calendar, MyRewardsProgram, MyWallet, and many more while updating them from time to time to better suit our customers’ evolving needs and demands.</P>
+                </div>
+                <div class="col-md-4" style="margin-top:10px;color:whitesmoke;">
+                    <h4 style="margin-bottom: 25px;">BOOKING PLACES WITH MAKE MY TRIP</h4>
+                    <P>Established in 2000, MakeMyTrip has since positioned itself as one of the leading companies, providing great offers, competitive airfares, exclusive discounts, and a seamless online booking experience to many of its customers. The experience of booking your flight tickets, hotel stay, and holiday package through our desktop site or mobile app can be done with complete ease and no hassles at all. We also deliver amazing offers, such as Instant Discounts, Fare Calendar, MyRewardsProgram, MyWallet, and many more while updating them from time to time to better suit our customers’ evolving needs and demands.</P>
+                </div>
+                <div class="col-md-4" style="margin-top:10px;">
+                    <h4 style="margin-bottom: 20px; color:whitesmoke;">DISCUSS WITH MAKE MY TRIP</h4>
+                   <p><i class="fa fa-whatsapp" style="color:whitesmoke;font-size:25px; margin-top:10px;"></i><b> : +91 9902537543</b></p>
+                   <P><i class="fa fa-phone" style="color:whitesmoke;font-size:25px;"></i><b> : +91 9902537543</b></P>
+                   <P><i class="fa fa-envelope" style="color:whitesmoke;font-size:25px;"></i><b> : MakeMyTrip@gmail.com</b></P>
+                </div>
+            </div>
+        </div>-->
+                    
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,455 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>kabini</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+body{
+    background:#f4f6f9;
+}
+
+/* PACKAGE SECTION */
+
+.term{
+    margin-top:40px;
+}
+
+.package-card{
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    padding:30px;
+    box-shadow:0px 10px 30px rgba(0,0,0,.1);
+    transition:.4s;
+}
+
+.package-card:hover{
+    transform:translateY(-5px);
+
+    box-shadow:
+    0px 20px 40px rgba(0,0,0,.15);
+}
+
+.package-image{
+    height:430px;
+    width:100%;
+    object-fit:cover;
+    border-radius:20px;
+    transition:0.5s;
+}
+
+.package-image:hover{
+    transform:scale(1.03);
+}
+
+.package-title{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.package-heading{
+    color:#dc3545;
+    font-size:18px;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin-bottom:20px;
+}
+
+.detail-box{
+    background:#f8f9fa;
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:14px;
+    transition:0.3s;
+}
+
+.detail-box:hover{
+    background:#f1f1f1;
+}
+
+.book-btn{
+    font-size:15px;
+    padding:12px 30px;
+    font-weight:bold;
+    border-radius:30px;
+    transition:.3s;
+}
+
+.book-btn:hover{
+    transform:scale(1.05);
+}
+
+/* REVIEW SECTION */
+
+.review-section-title{
+    font-size:32px;
+    font-weight:bold;
+    color:#dc3545;
+}
+
+.review-card{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    transition:0.4s;
+    border:1px solid #f1f1f1;
+    height:100%;
+    position:relative;
+    overflow:hidden;
+}
+
+.review-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.12);
+}
+
+/* TOP BORDER COLORS */
+
+.col-lg-4:nth-child(1) .review-card{
+    border-top:5px solid #dc3545;
+}
+
+.col-lg-4:nth-child(2) .review-card{
+    border-top:5px solid #0d6efd;
+}
+
+.col-lg-4:nth-child(3) .review-card{
+    border-top:5px solid #198754;
+}
+
+.col-lg-4:nth-child(4) .review-card{
+    border-top:5px solid #fd7e14;
+}
+
+.col-lg-4:nth-child(5) .review-card{
+    border-top:5px solid #6f42c1;
+}
+
+.col-lg-4:nth-child(6) .review-card{
+    border-top:5px solid #20c997;
+}
+
+/* PROFILE COLORS */
+
+.profile-circle{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+.col-lg-4:nth-child(1) .profile-circle{
+    background:#dc3545;
+}
+
+.col-lg-4:nth-child(2) .profile-circle{
+    background:#0d6efd;
+}
+
+.col-lg-4:nth-child(3) .profile-circle{
+    background:#198754;
+}
+
+.col-lg-4:nth-child(4) .profile-circle{
+    background:#fd7e14;
+}
+
+.col-lg-4:nth-child(5) .profile-circle{
+    background:#6f42c1;
+}
+
+.col-lg-4:nth-child(6) .profile-circle{
+    background:#20c997;
+}
+
+.review-stars{
+    font-size:22px;
+    color:#ffc107;
+}
+
+.review-text{
+    font-size:15px;
+    line-height:1.8;
+    color:#555;
+    margin-bottom:0;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.package-title{
+    font-size:25px;
+}
+
+.review-section-title{
+    font-size:26px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg sticky-top bg-white">
+
+<div class="container-fluid">
+
+<a class="navbar-brand fw-bold">
+Welcome {{user}} !
+</a>
+
+<ul class="nav mx-auto">
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'userhome' %}">
+Home
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'usercompletedorders' %}">
+Completed Orders
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark"href="{% url 'checklist' %}">
+Checklist
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'myorders' %}">
+My Orders
+</a>
+</li>
+
+
+<li class="nav-item">
+<a class="nav-link fw-semibold text-dark" href="{% url 'logout' %}">
+Logout
+</a>
+</li>
+
+</ul>
+
+<h3 class="text-danger me-3 fw-bold">
+TripVox
+</h3>
+
+</div>
+
+</nav>
+
+
+<!-- PAGE TITLE -->
+
+<h3 class="text-center mt-4 text-danger fw-bold">
+Package Details
+</h3>
+
+
+<!-- PACKAGE DETAILS -->
+
+<div class="container term mb-5">
+
+<div class="package-card">
+
+<div class="row align-items-center">
+
+<!-- IMAGE -->
+
+<div class="col-md-5 mb-4 mb-md-0">
+
+<img src="{{obj.image.url}}" class="package-image">
+
+</div>
+
+
+<!-- DETAILS -->
+
+<div class="col-md-7">
+
+<div class="package-heading">
+TOUR PACKAGE
+</div>
+
+<h2 class="package-title">
+{{obj.placename}}
+</h2>
+
+<p class="text-muted mb-4">
+Explore unforgettable travel experiences with TripVox.
+</p>
+
+<div class="detail-box">
+<i class="fa fa-map-marker text-danger"></i>
+<b> Destination :</b>
+{{obj.placename}}
+</div>
+
+<div class="detail-box">
+<i class="fa fa-calendar text-danger"></i>
+<b> Days :</b>
+{{obj.days}}
+</div>
+
+<div class="detail-box">
+<i class="fa fa-globe text-danger"></i>
+<b> Tour Theme :</b>
+{{obj.tour_themes}}
+</div>
+
+<div class="detail-box">
+<i class="fa fa-bus text-danger"></i>
+<b> Travel Mode :</b>
+{{obj.travel_mode}}
+</div>
+
+<div class="detail-box">
+<i class="fa fa-users text-danger"></i>
+<b> Slots :</b>
+{{obj.slots}}
+</div>
+
+<div class="detail-box">
+<i class="fa fa-money text-danger"></i>
+<b> Price :</b><b class="text-danger">
+₹ {{obj.special_price}} / PERSON</b>
+</div>
+
+<div class="mt-4 text-end">
+
+<a class="btn btn-dark book-btn"
+href="/book/{{obj.id}}">
+BOOK NOW
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- REVIEW SECTION -->
+
+<div class="mt-5">
+
+<h2 class="text-center review-section-title mb-5">
+User Reviews
+</h2>
+
+<div class="row">
+
+{% for feedback in view_reviews %}
+
+<!-- 3 CARDS PER ROW -->
+
+<div class="col-lg-4 col-md-6 mb-4">
+
+<div class="review-card">
+
+<div class="d-flex align-items-center mb-3">
+
+<div class="profile-circle">
+{{feedback.user_id.username|slice:":1"}}
+</div>
+
+<div class="ms-3">
+
+<h5 class="mb-0 fw-bold">
+{{feedback.user_id.username}}
+</h5>
+
+<small class="text-muted">
+☑ Verified Traveller
+</small>
+
+</div>
+
+</div>
+
+<p class="review-text">
+"{{feedback.description}}"
+</p>
+
+<div class="review-stars mb-3">
+
+{% if feedback.stars == '1' %}
+
+⭐
+
+{% elif feedback.stars == '2' %}
+
+⭐⭐
+
+{% elif feedback.stars == '3' %}
+
+⭐⭐⭐
+
+{% elif feedback.stars == '4' %}
+
+⭐⭐⭐⭐
+
+{% elif feedback.stars == '5' %}
+
+⭐⭐⭐⭐⭐
+
+{% else %}
+
+No Ratings
+
+{% endif %}
+
+</div>
+
+
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="text-center">
+
+<h5 class="text-muted">
+No reviews available yet.
+</h5>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
