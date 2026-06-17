@@ -266,11 +266,12 @@ def log(request):
         else:
             messages.success(request,'INVALID CREDENTIALS')
             return redirect('userpage')
+    return render(request,'login.html')
               
 def logout(request):
     print(request.session['username'])
     request.session.flush()
-    return redirect('userpage')
+    return redirect('log')
     
 #user views
 
