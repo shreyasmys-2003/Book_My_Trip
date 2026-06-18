@@ -27,8 +27,8 @@
                 object-fit:cover;
             }
             .hero{
-                background:linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.4)),url("{% static 'images/tigress.jpeg' %}")center/cover no-repeat;
-                height:500px;
+                background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url("{% static 'images/tigress.jpeg' %}")center/cover no-repeat;
+                height:800px;
                 color: white;
                 padding: 80px 0;
                 text-align: center;
@@ -185,6 +185,68 @@
     font-size: 12px;
     border-radius: 20px;
 }
+.hero{
+    background:
+    linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
+    url("{% static 'images/tigress.jpeg' %}") center center/cover no-repeat;
+
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+.hero-content{
+    max-width:850px;
+}
+
+.hero h5{
+    font-size:60px;
+    font-weight:300;
+    text-shadow:0 5px 15px rgba(0,0,0,0.5);
+}
+
+.hero .caption{
+    font-size:24px;
+    font-weight:500;
+    margin-top:15px;
+    margin-bottom:25px;
+    color:#f8f9fa;
+}
+
+.hero p{
+    font-size:18px;
+    color:#e9ecef;
+    line-height:1.8;
+}
+
+.hero-btn{
+    padding:14px 35px;
+    border-radius:50px;
+    font-weight:700;
+    font-size:18px;
+    margin-top:20px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:45px;
+}
+
+.hero .caption{
+    font-size:18px;
+}
+
+.hero p{
+    font-size:15px;
+}
+
+}
 
 </style>
             
@@ -192,52 +254,29 @@
     </head>
     <body>
         <!--NAVBAR STARTS HERE-->
-        <nav class="navbar navbar-expand-lg bg-white sticky-top">
-            <div class="container-fluid">
-                <a class="navbar-brand text-dark">🚀 Trip<b style="color:red;">Vox</b></a>
-                 <h4 style="margin-left:50px;" ><b class="text-danger">TripVox</b> - Explore Your Dream Destination</h4>
+       <nav class="navbar navbar-expand-lg bg-white sticky-top shadow-sm py-3">
+    <div class="container-fluid">
 
-              
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="btn btn-danger me-0" data-bs-toggle="modal" data-bs-target="#register">Register/Login</a>
-                    </li>
-                  <!--  <li class="nav-item">
-                        <a class="btn btn-dark me-2"  data-bs-toggle="modal" data-bs-target="#login">Login</a>
-                    </li>-->
-                </ul>
-            </div>
-        </nav>
+       
+        <h4 class="mb-0 fw-semibold text-secondary" style="margin-left:50px;">
+            <b class="text-danger">TripVox</b> - A Voice Based Intelligent Travel Booking System
+        </h4>
+
+        <ul class="nav ms-auto">
+            <li class="nav-item">
+                <a class="btn btn-danger px-4 rounded-pill shadow-sm"
+                   data-bs-toggle="modal"
+                   data-bs-target="#register">
+                    Register / Login
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
         
         <!--NAVBAR ENDS HERE-->
 
-        <!--MODAL START HERE
-        <div class="modal fade" id="login">
-            <div class="modal-dialog"  style="max-width:400px;">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <h2 align="center" class="text-primary">LOGIN</h2>
-                        {% for msg in messages %}
-                        {{msg}}
-                        {% endfor %}
-                         <h6 class="text-success text-center">Login Here</h6>
-                        <form action="{% url 'log' %}" method="POST">
-
-                            {% csrf_token %} 
-
-                            <label class="mb-2 fw-semibold">Username</label>     
-                            <input type="text" name="username"  required placeholder="Enter Your Username" class="form-control mb-3" >
-
-                            <label class="mb-2 fw-semibold">Password</label>  
-                            <input type="password" name="password"  required placeholder="Enter Your Password" class="form-control mb-3">
-
-                           <input type="SUBMIT" onclick="fun()" value="LOGIN" class="btn btn-dark w-100">
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>-->
         
         <div class="modal fade" id="register">
             <div class="modal-dialog modal-dialog-centered"  style="max-width:400px;">
@@ -265,7 +304,7 @@
                             <label class="form-label mb-2 fw-semibold">Password</label>
                             <input type="password" name="password" required placeholder="Enter Your Password" class="form-control  p-2 rounded-3 mb-3">
                             
-                            <input type="submit" class="btn btn-dark w-100" value="REGISTER">
+                            <input type="submit" class="btn btn-dark w-100" value="REGISTER NOW">
 
                             <div class="signup-link text-center mt-3">Already Having an account?<a href="{% url 'log' %}">Login</a></div>
 
@@ -276,158 +315,45 @@
             </div>
         </div>
 
-    <!--  <script>
-            function fun(){
-                alert('welcome')
-            }
-        </script>-->
 
-        <section class="hero">
-            <div class="container">
-                <h1 class="animate__animated animate__flipInX animate__slow" style="font-weight: 800;">Book My Trip</h1>
-                <P class="fw-bold mt-3 text-white">EXPLORE THE UNSEEN</P>
-                <a class="btn btn-outline-light" href="{% url 'log' %}">Login Here</a>
-            </div>
-        </section>
+       <section class="hero">
+
+    <div class="hero-content">
+
+        <h5 class="animate__animated animate__fadeInDown">
+         Explore Destinations Of Karnataka
+        </h5>
+
+        <div class="caption">
+            ✨ Discover Karnataka's Hidden Gems & Create Memories That Last Forever
+        </div>
+
+        <p>
+            From misty mountains and pristine beaches to ancient temples and
+            thrilling adventures, TripVox brings you unforgettable journeys
+            across Karnataka's most breathtaking destinations.
+        </p>
+
+        <a href="{% url 'log' %}"
+           class="btn btn-danger hero-btn">
+           Start Exploring
+        </a>
+
+    </div>
+
+</section>
 
 
 
        
         <!--MODAL ENDS HERE-->
 
-       <!-- <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-4 ">
-                    <h1 class="display-6">CATEGORIES</h1>
-                </div>
-                <div class="col-md-8 d-flex justify-content-between">
-                    <nav class="navbar navbar-expand-lg ">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-warning rounded-pill text-dark px-5" data-bs-toggle="pill" data-bs-target="#tab-1">HILL STATION'S</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-warning rounded-pill text-dark px-5" data-bs-target="pill"  href="#tab-2">TREKKING</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link btn btn-warning rounded-pill text-dark px-5"  href="#">TEMPLES</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link btn btn-warning rounded-pill text-dark px-5"  href="#">SAFARI'S</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>-->
-
-        <div class="container mt-5" style="margin-top: 20px;">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h2 class="fw-bold text-success">Explore, Your Dream Destination </h1>
-                    <P>Adventure awaits,Wander often, wonder always.Once a year go somewhere you have never been before.You lose sight of things…and when you travel, everything balances out.</P>
-                    <a class="btn btn-dark mt-3 px-4 rounded-pill" data-bs-toggle="modal" data-bs-target="#register">Browse</a>
-                </div>
-                <div class="col-md-6">
-                    <div id="carouselexampledark" class="carousel carousel-dark slide"  data-bs-ride="carousel">
-                        <div class="carousel-inner shadow rounded-5">
-                            <div class="carousel-item active" data-bs-intervel="1000">
-                                <img src="{% static 'images/tigress.jpeg' %}">
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/netrani.jpg' %}" >
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/netravathi.avif' %}" >
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/agumbeghat.jpg' %}" >
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/himadgopalaswamy.webp' %}">
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/murudeshwara.jpg' %}">
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/mysore.jpg' %}">
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/yana.webp' %}">
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/jogg falls.png' %}">
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/krishna temple.jpg' %}">
-                            </div>
-                            <div class="carousel-item" data-bs-intervel="1000">
-                                <img src="{% static 'images/orange county.webp' %}">
-                            </div>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+     
+        
         
         
 
-       <!-- <div class="container-fluid mt-5" style="background-color: lightslategray;">
-            <div class="row">
-                <div class="col-md-3"> 
-                    <h4>WHY PEOPLE LIKE US</h4>
-                    <p>TYPE SETTING,QUICK REPLY,MORE AND MORE TRIP PACKAGES,OFFERED ALL IN ONE PACKAGE,user experience  and ratings,feedback</p>
-                </div>
-            </div>
-        </div>-->
-
-        <!--<div class="container mt-5">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card bg-warning">
-                        <div class="card-header">
-                            <i class="fa fa-phone d-flex justify-content-center mt-3" style="font-size:80px;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 align="center">24/7 SUPPORT</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-success">
-                        <div class="card-header">
-                            <i class="fa fa-user-circle d-flex justify-content-center mt-3" style="font-size:80px;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 align="center">24/7 USER SUPPORT</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-danger">
-                        <div class="card-header">
-                            <i class="fa fa-whatsapp d-flex justify-content-center mt-3" style="font-size:80px;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 align="center">ENQUIRY YOUR QUERY</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-info">
-                        <div class="card-header">
-                            <i class="fa fa-user-circle d-flex justify-content-center mt-3" style="font-size:80px;"></i>
-                        </div>
-                        <div class="card-body">
-                            <h6 align="center">24/7 USER SUPPORT</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
+      
         <div class="container mt-5 px-5 ">
             <div class="row">
                 <h1 class="display-6 mb-3" style="font-weight:800;"><b class="text-danger">Categories</b> You May Like</h1>
@@ -439,9 +365,9 @@
         <img src="{{msg.categoryimage.url}}">
         <div class="card-body">
             <h5>{{msg.name}}</h5>
-            <a class="btn btn-dark rounded-pill px-4"
+           <!-- <a class="btn btn-dark rounded-pill px-4"
                href="/viewmore/{{msg.id}}">
-               Explore
+               Explore-->
             </a>
         </div>
     </div>
@@ -449,51 +375,7 @@
 
                 {% endfor %}
 
-                <!--<div class="col-md-2">
-                    <div class="card">
-                        <img src="{% static 'images/tigress.jpeg' %}">
-                        <div class="card-body">
-                            <h5> SAFARI'S</h5>
-                            <a class="btn btn-dark">ENQUIRY NOW</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="card">
-                        <img src="{% static 'images/murudeshwara2.jpg' %}">
-                        <div class="card-body">
-                            <h5>TEMPLES</h5>
-                            <a class="btn btn-dark">ENQUIRY NOW</a>
-                        </div>
-                    </div>
-                </div>
-                 <div class="col-md-2">
-                    <div class="card">
-                        <img src="{% static 'images/yana.webp' %}">
-                        <div class="card-body">
-                            <h5>TREKKING'S</h5>
-                            <a class="btn btn-dark">ENQUIRY NOW</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="card">
-                        <img src="{% static 'images/netrani.jpg' %}">
-                        <div class="card-body">
-                            <h5>ISLANDS</h5>
-                            <a class="btn btn-dark">ENQUIRY NOW</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="card">
-                        <img src="{% static 'images/kabini resorts.jpg' %}">
-                        <div class="card-body">
-                            <h5>RESORTS</h5>
-                            <a class="btn btn-dark">ENQUIRY NOW</a>
-                        </div>
-                    </div>
-                </div>-->
+             
             </div>
         </div>
 
@@ -556,28 +438,7 @@
             </div>
         </div>
 
-        <!--<div class="container mt-5">
-            <div class="row">
-                <div class="col-md-6 ps-5 pe-5">
-                    <div class="card ">
-                            <img src="{% static 'images/group.webp' %}">
-                            <h5 class="d-flex justify-content-center mt-2">SOCIAL & COLLABORATIVE TRIP PLANNING</h5>
-                            <div class="col ps-3 mb-3">
-                               <a class="btn btn-dark" href="#">ENQUIRY NOW</a>
-                            </div>
-                    </div>
-                </div>
-                <div class="col-md-6 ps-5 pe-5">
-                    <div class="card">
-                            <img src="{% static 'images/individual.jpg' %}">
-                            <h5 class="d-flex justify-content-center mt-2">INDIVIDUAL TRIP PLANNING</h5> 
-                            <div class="col ps-3 mb-3">
-                               <a class="btn btn-dark" href="#">ENQUIRY NOW</a>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+       
 
         <!--FOOTER STARTS-->
 
