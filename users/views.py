@@ -313,7 +313,7 @@ def userhome(request):
             wishlist_products=wishlist.objects.filter(user_id_id=user_id).values_list('product_id_id',flat=True)
         return render(request,'userhome.html',{'obj':obj,'user':user,'wishlist_products':wishlist_products})
     else:
-        return redirect('userpage',{'wishlist_products':wishlist_products})
+        return redirect('log')
     
 
     
