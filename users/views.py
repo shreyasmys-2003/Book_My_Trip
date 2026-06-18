@@ -265,7 +265,7 @@ def log(request):
             return render(request,'userhome.html',{'obj':obj})
         else:
             messages.success(request,'INVALID CREDENTIALS')
-            return redirect('userpage')
+            return redirect('log')
     return render(request,'login.html')
               
 def logout(request):
