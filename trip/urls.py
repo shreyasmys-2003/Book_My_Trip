@@ -65,6 +65,8 @@ urlpatterns = [
 
     path('voice-checklist/<str:place>/',views.voice_add_checklist,name='voice_add_checklist'),
 
+    path('adminlogout',views.adminlogout,name='adminlogout'),
+
 
     path('usercompletedorders',views.usercompletedorders,name='usercompletedorders'),
     path('myorders',views.myorders,name='myorders'),

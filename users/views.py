@@ -272,6 +272,10 @@ def logout(request):
     print(request.session['username'])
     request.session.flush()
     return redirect('log')
+
+def adminlogout(request):
+    request.session.flush()
+    return render(request,'adminlogin.html')
     
 #user views
 
