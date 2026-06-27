@@ -23,26 +23,47 @@ from users import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('adminlog/',views.adminlog,name='adminlog'),
+
     path('adminhome/',views.adminhome,name='adminhome'),
+
     path('view orders',views.vieworders,name='view orders'),
+
     path('completed orders',views.completedorders,name='completed orders'),
+
     path('delete/<int:id>',views.delete,name='delete'), 
+
     path('edit/<int:id>',views.edit,name='edit'),
+
     path('insert',views.insert,name='insert'),
+
     path('recommend',views.recommend,name='recommend'),
+
     path('viewmore/<int:id>',views.viewmore,name='viewmore'),
+
     path('place/<int:id>',views.place,name='place'),
+
     path('book/<int:id>',views.book,name='book'),
+
     path('booknow',views.booknow,name='booknow'),
+
     path('queries',views.queries,name='queries'),
+
     path('rejection',views.rejection,name='rejection'),
+
     path('confirm/<int:id>',views.confirm,name='confirm'),
+
     path('registration',views.registration,name='registration'),
+
     path('log',views.log,name='log'),
+
     path('logout',views.logout,name='logout'),
+
     path('voicesearch/',views.voicesearch,name='voicesearch'),
+
     path('userpage',views.userpage,name='userpage'),
+
     path('userhome',views.userhome,name='userhome'),
 
     path('add_to_checklist/<int:id>',views.add_to_checklist,name='add_to_checklist'),
@@ -67,12 +88,16 @@ urlpatterns = [
 
     path('adminlogout',views.adminlogout,name='adminlogout'),
 
-
     path('usercompletedorders',views.usercompletedorders,name='usercompletedorders'),
+
     path('myorders',views.myorders,name='myorders'),
+    
     path('makepayment',views.makepayment,name='makepayment'),
+    
     path('pay',views.pay,name='pay'),
+
     path('cancel',views.cancel,name='cancel'),
+    
     #path('cancels',views.cancels,name='cancels'),
 
    
