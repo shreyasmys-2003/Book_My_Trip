@@ -1,71 +1,146 @@
+
 {% load static %}
-
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>enquiry form</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+<head>
 
-        <style>
-            .navbar{
-                    background:white;
-                    box-shadow:0px 2px 10px rgba(0,0,0,0.1);
-                    }
+<title>TripVox Payment</title>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        </style>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg sticky-top bg-white">
+<style>
+
+body{
+    background:linear-gradient(135deg,#eef2ff,#f8fbff);
+    font-family:Segoe UI,sans-serif;
+}
+
+/* Navbar */
+
+.navbar{
+    background:white;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+/* Payment Card */
+
+.payment-card{
+    background:white;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    padding:35px;
+    max-width:700px;
+    margin:auto;
+}
+
+.payment-card h2{
+    color:#dc3545;
+    font-weight:700;
+}
+
+.payment-card h4{
+    color:#198754;
+    font-weight:700;
+}
+
+/* QR */
+
+.qr-image{
+    width:260px;
+    height:260px;
+    object-fit:cover;
+    border-radius:15px;
+    border:5px solid #f1f1f1;
+    transition:.3s;
+}
+
+.qr-image:hover{
+    transform:scale(1.03);
+}
+
+/* Inputs */
+
+.form-control,
+.form-select{
+
+    border-radius:12px;
+    height:48px;
+    box-shadow:none;
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:#dc3545;
+    box-shadow:0 0 10px rgba(220,53,69,.2);
+}
+
+/* Button */
+
+.btn-pay{
+
+    width:100%;
+    height:50px;
+    border:none;
+    border-radius:12px;
+    background:#dc3545;
+    color:white;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn-pay:hover{
+
+    background:#bb2d3b;
+    transform:translateY(-2px);
+}
+
+.amount{
+
+    font-size:28px;
+    color:#198754;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
 
 <div class="container-fluid">
 
-<a class="navbar-brand fw-semibold">
-
-Welcome {{user}} !
-
+<a class="navbar-brand fw-bold">
+Welcome {{user}}!
 </a>
 
-<ul class="nav navbar mx-auto">
+<ul class="nav mx-auto">
 
 <li class="nav-item">
-<a class="nav-link fw-semibold text-dark"
-href="{% url 'userhome' %}">
-Home
-</a>
+<a class="nav-link text-dark fw-semibold" href="{% url 'userhome' %}">Home</a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link fw-semibold text-dark"
-href="{% url 'usercompletedorders' %}">
-Completed Orders
-</a>
+<a class="nav-link text-dark fw-semibold" href="{% url 'usercompletedorders' %}">Completed Orders</a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link fw-semibold text-dark"
-href="{% url 'checklist' %}">
-Checklist
-</a>
+<a class="nav-link text-dark fw-semibold" href="{% url 'checklist' %}">Checklist</a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link fw-semibold text-dark"
-href="{% url 'myorders' %}">
-My Orders
-</a>
+<a class="nav-link text-dark fw-semibold" href="{% url 'myorders' %}">My Orders</a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link fw-semibold text-dark"
-href="{% url 'logout' %}">
-Logout
-</a>
+<a class="nav-link text-dark fw-semibold" href="{% url 'logout' %}">Logout</a>
 </li>
 
 </ul>
 
-<h3 class="text-danger">
+<h3 class="text-danger fw-bold">
 TripVox
 </h3>
 
@@ -73,73 +148,116 @@ TripVox
 
 </nav>
 
-        <h3 class="text-center text-danger mt-4">MAKE YOUR PAYMENT HERE</h3>
-        <h4 class="text-center text-danger mt-4 mb-3">PLEASE PAY ₹{{total_amount}} </h4>
-      
-            <div class="container-fluid">
-                <div class="row">
-                   
-                    <div class="col-md-12" align="center">   
-                        <img src="{% static 'images/GooglePay_QR.png' %}" style="height:300px;width:550px mb-3;">
-                        
-                        <form action="{% url 'pay' %}"  method="POST">
-                            
-                            {% csrf_token %}
+<div class="container py-5">
 
-                            <input type="text" name="id" hidden class="form-control w-25 mb-3 mt-3"> 
+<div class="payment-card text-center">
 
-                            <input type="text" name="id" class="form-control w-25 mb-3 mt-3" value="{{show.id}}">
+<h2>Complete Your Payment</h2>
 
-                            <input type="number" name="persons" class="form-control w-25 mt-3" value="{{show.persons}}">
+<p class="text-muted">
+Scan the QR code using any UPI application.
+</p>
 
-                            <input type="number" name="total_amount" class="form-control w-25 mt-3" value="{{total_amount}}">
+<div class="amount mb-4">
+₹{{total_amount}}
+</div>
 
-                            <input type="text" name="transactional_ID" class="form-control w-25 mt-3" placeholder="ENTER TRANSACTIONAL_ID">
+<img src="{% static 'images/GooglePay_QR.png' %}"
+class="qr-image mb-4">
 
-                            <select id="trip"  name="payment_MODE" class="form-control w-25 mt-3" class="fav_trip">
-                                <option>GOOGLE PAY</option>
-                                <option>PHONE PAY</option>
-                                <option>RAZOR PAY</option>
-                            </select>
-                            <input type="submit" class="btn btn-dark mt-3 mb-5" value="SUBMIT">
-                        </form>
-                        
-                      
-                    </div>
-                </div>
-            </div>
+<form action="{% url 'pay' %}" method="POST">
 
-           <div class="toast-container position-fixed top-0 end-0 p-3">
+{% csrf_token %}
 
-    {% for msg in messages %}
+<input type="hidden"
+name="id"
+value="{{show.id}}">
 
-    <div class="toast align-items-center text-bg-success border-0 show mb-2"
-         role="alert"
-         aria-live="assertive"
-         aria-atomic="true">
+<div class="mb-3">
 
-        <div class="d-flex">
-
-            <div class="toast-body">
-                {{msg}}
-            </div>
-
-            <button type="button"
-                    class="btn-close btn-close-white me-2 m-auto"
-                    data-bs-dismiss="toast">
-            </button>
-
-        </div>
-
-    </div>
-
-    {% endfor %}
+<input
+type="number"
+name="persons"
+class="form-control"
+value="{{show.persons}}"
+readonly>
 
 </div>
-            
-            
-     
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 
-    </body>
+<div class="mb-3">
+
+<input
+type="number"
+name="total_amount"
+class="form-control"
+value="{{total_amount}}"
+readonly>
+
+</div>
+
+<div class="mb-3">
+
+<input
+type="text"
+name="transactional_ID"
+class="form-control"
+placeholder="Enter Transaction ID"
+required>
+
+</div>
+
+<div class="mb-4">
+
+<select
+name="payment_MODE"
+class="form-select">
+
+<option>GOOGLE PAY</option>
+<option>PHONE PAY</option>
+<option>RAZOR PAY</option>
+
+</select>
+
+</div>
+
+<button class="btn-pay">
+Confirm Payment
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+
+{% for msg in messages %}
+
+<div class="toast text-bg-success show border-0">
+
+<div class="d-flex">
+
+<div class="toast-body">
+{{msg}}
+</div>
+
+<button
+type="button"
+class="btn-close btn-close-white me-2 m-auto"
+data-bs-dismiss="toast">
+</button>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>
+
