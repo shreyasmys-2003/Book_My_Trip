@@ -28,7 +28,53 @@ body{
     height:100vh;
 }
 
-/* Login Section */
+/* ================= Left Hero Section ================= */
+
+.travel-section{
+    width:60%;
+    background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.20)),
+    url("{% static 'images/Jog Falls 🌊 2025.jpg' %}") center center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:60px;
+}
+
+.hero-content{
+    max-width:650px;
+    color:#fff;
+}
+
+.hero-content h1{
+    font-size:58px;
+    font-weight:800;
+    margin-bottom:20px;
+    line-height:1.1;
+}
+
+.hero-content p{
+    font-size:20px;
+    line-height:1.8;
+    margin-bottom:30px;
+    opacity:.95;
+}
+
+.hero-btn{
+    background:#0ea5e9;
+    color:white;
+    border:none;
+    padding:14px 35px;
+    border-radius:50px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.hero-btn:hover{
+    background:#0284c7;
+}
+
+/* ================= Login Section ================= */
 
 .login-section{
     width:40%;
@@ -64,6 +110,12 @@ body{
 .form-control{
     height:55px;
     border-radius:12px;
+    border:1px solid #ddd;
+}
+
+.form-control:focus{
+    box-shadow:none;
+    border-color:#0ea5e9;
 }
 
 .btn-login{
@@ -73,6 +125,7 @@ body{
     background:#0ea5e9;
     font-weight:600;
     font-size:17px;
+    transition:.3s;
 }
 
 .btn-login:hover{
@@ -84,70 +137,6 @@ body{
     margin-top:20px;
 }
 
-/* Karnataka Tourism Section */
-
-.travel-section{
-    width:60%;
-    background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url("{% static 'images/Jog Falls 🌊 2025.jpg' %}")center/cover no-repeat;
-    padding:50px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.travel-title{
-    color:white;
-    margin-bottom:20px;
-}
-
-.travel-title h3{
-    font-size:40px;
-    font-weight:700;
-}
-
-.travel-title p{
-    opacity:.9;
-    font-size:18px;
-}
-
-.travel-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-}
-
-.travel-card{
-    background:rgba(255,255,255,.15);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    overflow:hidden;
-    color:white;
-    transition:.3s;
-}
-
-.travel-card:hover{
-    transform:translateY(-5px);
-}
-
-.travel-card img{
-    width:100%;
-    height:200px;
-    object-fit:cover;
-}
-
-.travel-content{
-    padding:15px;
-}
-
-.travel-content h5{
-    font-weight:600;
-}
-
-.travel-content p{
-    font-size:14px;
-    opacity:.9;
-}
-
 @media(max-width:992px){
 
     .travel-section{
@@ -157,6 +146,7 @@ body{
     .login-section{
         width:100%;
     }
+
 }
 
 </style>
@@ -166,66 +156,44 @@ body{
 
 <div class="login-container">
 
-    <!-- Karnataka Tourism Side -->
+    <!-- Left Hero Image -->
 
     <div class="travel-section">
 
-        <div class="travel-title">
-            <h3>Explore Destinations Of Karnataka</h3>
+        <div class="hero-content">
+
+            <h1>Explore Karnataka</h1>
+
             <p>
-                Discover the rich heritage, majestic hills,
-                waterfalls, wildlife and cultural beauty of Karnataka.
+                Discover breathtaking waterfalls, lush forests,
+                magnificent hill stations, wildlife sanctuaries,
+                ancient temples, and unforgettable adventures
+                across Karnataka.
             </p>
-        </div>
 
-        <div class="travel-grid">
-
-            <div class="travel-card">
-                <img src="{% static 'images/tigress.jpeg' %}" alt="Nagarahole">
-                <div class="travel-content">
-                    <h5>Kabini Tiger Reserve</h5>
-                    <p>Exploring Tiger Reserve's of Karnataka.</p>
-                </div>
-            </div>
-
-            <div class="travel-card">
-                <img src="{% static 'images/kemmangundi.jpg' %}" alt="Coorg">
-                <div class="travel-content">
-                    <h5>Hill Stations</h5>
-                    <p>Exploring hill stations of Karnataka.</p>
-                </div>
-            </div>
-
-            <div class="travel-card">
-                <img src="{% static 'images/Jog Falls 🌊 2025.jpg' %}" alt="Jog Falls">
-                <div class="travel-content">
-                    <h5>Jog Falls</h5>
-                    <p>Exploring famous falls of Karnataka.</p>
-                </div>
-            </div>
-
-            <div class="travel-card">
-                <img src="{% static 'images/netrani.jpg' %}" alt="Hampi">
-                <div class="travel-content">
-                    <h5>Island</h5>
-                    <p>Exploring Islands of Karnataka.</p>
-                </div>
-            </div>
+            <button class="hero-btn">
+                Discover More
+            </button>
 
         </div>
 
     </div>
 
-    <!-- Login Side -->
+    <!-- Login Section -->
 
     <div class="login-section">
 
         <div class="login-box">
 
-            <div class="logo">Namma Karnataka Tours</div>
+            <div class="logo">
+                Namma Karnataka Tours
+            </div>
 
             <h2>Welcome Back 🌿</h2>
-            <p>Login to explore Karnataka's amazing destinations.</p>
+
+            <p>
+                Login to explore Karnataka's amazing destinations.
+            </p>
 
             {% for msg in messages %}
             <div class="alert alert-warning">
@@ -238,19 +206,21 @@ body{
                 {% csrf_token %}
 
                 <div class="mb-3">
-                    <input type="text"
-                           name="username"
-                           class="form-control"
-                           placeholder="Username"
-                           required>
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        placeholder="Username"
+                        required>
                 </div>
 
                 <div class="mb-3">
-                    <input type="password"
-                           name="password"
-                           class="form-control"
-                           placeholder="Password"
-                           required>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Password"
+                        required>
                 </div>
 
                 <div class="d-flex justify-content-between mb-4">
@@ -266,16 +236,22 @@ body{
 
                 </div>
 
-                <button type="submit"
-                        class="btn btn-login w-100 text-white">
+                <button
+                    type="submit"
+                    class="btn btn-login w-100 text-white">
+
                     Login
+
                 </button>
 
                 <div class="signup-link">
+
                     Don't have an account?
+
                     <a href="">
                         Register
                     </a>
+
                 </div>
 
             </form>
