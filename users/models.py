@@ -57,6 +57,7 @@ class addreview(models.Model):
 
 class payment(models.Model):
     id=models.AutoField(primary_key=True)
+    register_id=models.ForeignKey(register,on_delete=models.CASCADE)
     enquiry_id=models.IntegerField()
     persons=models.IntegerField()
     total_amount=models.IntegerField()

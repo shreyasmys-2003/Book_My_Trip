@@ -396,14 +396,46 @@ def makepayment(request):
         return render(request,'enquiry form.html',{'show':show,'total_amount':total_amount,'user':user})
     
 def pay(request):
-    if request.method=='POST':
+    if 'id' in request.session:
+     if request.method=='POST':
+        user=register.objects.get(id=request.session['id'])
         money=payment()
+        money.register_id=user
         money.enquiry_id=request.POST['id']
         money.persons=request.POST['persons']
         money.total_amount=request.POST['total_amount']
         money.transactional_ID=request.POST['transactional_ID']
         money.payment_MODE=request.POST['payment_MODE']
         money.save()
+        send_mail(
+    subject="✅ Payment Successful - TripVox",
+    message=f"""
+                Thank you for your payment.
+
+                ✅Your payment has been received successfully.
+
+                Payment Details
+                ----------------------------
+
+                Amount Paid : ₹{money.total_amount}
+                Payment Mode : {money.payment_MODE}
+                Transaction ID : {money.transactional_ID}
+
+                🎉Your booking is now confirmed.
+
+                We hope you enjoy your trip.
+
+                Thank you for choosing TripVox.
+
+                ✨ Happy Traveling!
+
+                ❤️Regards,
+                TripVox Team
+                """,
+    from_email="tripvoxvox@gmail.com",
+    recipient_list=[user.email],
+    fail_silently=False,
+)
         messages.success(request,'payment successfull')
         cash=payment.objects.all()
         return render(request,'enquiry form.html',{'cash':cash})
