@@ -725,6 +725,35 @@ recognition.onresult = function(event){
     console.log("User Said:", voiceText);
 
     searchInput.value = voiceText;
+    
+    // ==========================
+    // GREETINGS
+    // ==========================
+
+    if (voiceText === "hi" || voiceText === "hello" || voiceText === "hey") {
+
+        speak("Hello! How can I help you today?");
+        closePopup();
+        return;
+
+    } else if (voiceText === "good morning") {
+
+        speak("Good morning! Hope you have a wonderful day.");
+        closePopup();
+        return;
+
+    } else if (voiceText === "good afternoon") {
+
+        speak("Good afternoon! How can I assist you?");
+        closePopup();
+        return;
+
+    } else if (voiceText === "good evening") {
+
+        speak("Good evening! How can I help you today?");
+        closePopup();
+        return;
+    }
 
     // ==========================
     // HOME
